@@ -12,8 +12,11 @@ my $pos = 0;
 my $stepCounter = 0;
 while ($continue){
 	my $jump = $maze[$pos];
-	print ">>$jump<<\n";
-	$maze[$pos] +=1;
+	if ($jump>=3){
+		$maze[$pos] -=1;
+	}else{
+		$maze[$pos] +=1;
+	}
 	my $newpos = $pos + $jump;
 	if ($newpos > $#maze or $newpos < 0){
 		$continue = 0;	
