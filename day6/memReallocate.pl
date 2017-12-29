@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 
+#my @banks = (0,2,7,0);
 my @banks = (4,	10,	4,	1,	8,	4,	9,	14,	5,	1,	14,	15,	0,	15,	3,	5);
 
 sub findWhereMax {	#takes a list, returns the index of the maximum element.
@@ -14,7 +15,7 @@ sub findWhereMax {	#takes a list, returns the index of the maximum element.
 	return $index;
 }
 
-sub findInList {	#give it a target and a list. Returns 1 if target is in list and 0 if not.
+sub isInList {	#give it a target and a list. Returns 1 if target is in list and 0 if not.
 	my $target = shift;
 	foreach my $str (@_){
 		return 1 if ($str eq $target);
@@ -22,11 +23,22 @@ sub findInList {	#give it a target and a list. Returns 1 if target is in list an
 	return 0;
 }
 
+sub findWhere {	#given a target and a list, returns the index where the target can be found.
+	my $target = shift;
+	my $loc;
+	foreach (0..$#_){
+		$loc =  $_ if ($_[$_] eq $target);
+	}
+	return $loc;
+}
+
 my $continue = 1;
 my $stepCounter = 0;
 my @stateTracker;
-	$stateTracker[0] = join "", @banks;
+	$stateTracker[0] = join ",", @banks;
 print $stateTracker[0], "\n";
+
+my $beginLoop;
 
 while ($continue){
 	my $pos = findWhereMax(@banks);
@@ -42,9 +54,9 @@ while ($continue){
 		$numBlocks -= 1;
 	}
 	my $state = join ",", @banks;
-	print $state, "\n";
-	if (findInList $state, @stateTracker){
+	if (isInList $state, @stateTracker){
 		$continue = 0;
+		$beginLoop = findWhere($state, @stateTracker);
 	}else{
 		push @stateTracker, ($state);
 	}
@@ -52,4 +64,4 @@ while ($continue){
 }
 
 print "Number of reallocations: $stepCounter\n";
-#not 9614, too low.
+print "Length of infinite loop: ", $stepCounter - $beginLoop, "\n";
