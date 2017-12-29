@@ -24,7 +24,31 @@ sub findInList {	#give it a target and a list. Returns 1 if target is in list an
 
 my $continue = 1;
 my $stepCounter = 0;
+my @stateTracker;
+	$stateTracker[0] = join "", @banks;
+print $stateTracker[0], "\n";
 
-print "The string \"3\" is ";
-print "not " unless findInList("3", @banks);
-print "in the list.\n";
+while ($continue){
+	my $pos = findWhereMax(@banks);
+	my $numBlocks = $banks[$pos];
+	$banks[$pos] = 0;
+	while($numBlocks>0){
+		if ($pos < $#banks){
+			$pos += 1;
+		} else {
+			$pos = 0;
+		}
+		$banks[$pos] += 1;
+		$numBlocks -= 1;
+	}
+	my $state = join "", @banks;
+	print $state, "\n";
+	if (findInList $state, @stateTracker){
+		$continue = 0;
+	}else{
+		push @stateTracker, ($state);
+	}
+	$stepCounter += 1;
+}
+
+print "Number of reallocations: $stepCounter\n";
