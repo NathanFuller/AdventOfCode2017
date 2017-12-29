@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-my @banks = (0,2,7,0);
+my @banks = (4,	10,	4,	1,	8,	4,	9,	14,	5,	1,	14,	15,	0,	15,	3,	5);
 
 sub findWhereMax {	#takes a list, returns the index of the maximum element.
 	my $index = 0;
@@ -41,7 +41,7 @@ while ($continue){
 		$banks[$pos] += 1;
 		$numBlocks -= 1;
 	}
-	my $state = join "", @banks;
+	my $state = join ",", @banks;
 	print $state, "\n";
 	if (findInList $state, @stateTracker){
 		$continue = 0;
@@ -52,3 +52,4 @@ while ($continue){
 }
 
 print "Number of reallocations: $stepCounter\n";
+#not 9614, too low.
