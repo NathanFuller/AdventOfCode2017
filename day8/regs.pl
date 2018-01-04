@@ -2,10 +2,12 @@
 use strict;
 use warnings;
 
-open (my $fin, "<", "/Users/nathanfuller/adventOfCode/day8/test.txt")
+open (my $fin, "<", "/Users/nathanfuller/adventOfCode/day8/info.txt")
 	|| die "$!";
 
 my %registers;
+
+my $maxheld = 0;
 
 while (my $instruction = <$fin>){
 	if ($instruction =~ /([a-z]+) (inc|dec) (-?\d+) if ([a-z]+) (==|!=|<|>|<=|>=) (-?[\d]+)/){
@@ -79,9 +81,12 @@ while (my $instruction = <$fin>){
 
 		print "After change: $1 is $registers{$1}{myval}\n";
 		print "\n";
+		
+		$maxheld = $registers{$1}{myval} if ($registers{$1}{myval} > $maxheld); 
 	}
 }
 
-my @allregs = values %registers;
-@allregs = sort {$a{myval} <=> $b{myval}} @allregs;
-print "Largest value: $allregs[$#allregs]\n";
+my @allregs = sort {$registers{$a}{myval} <=> $registers{$b}{myval}} keys %registers;
+print "Largest value: $allregs[$#allregs]\t";
+print "$registers{$allregs[$#allregs]}{myval}\n";
+print "Largest value ever: $maxheld\n";
