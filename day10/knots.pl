@@ -2,14 +2,14 @@
 use strict;
 use warnings;
 
-open (my $fin, "<", "test.txt")
+open (my $fin, "<", "info.txt")
 	|| die "$!";
 
 my $lengthline = <$fin>;
 my @lengths = split(/,/, $lengthline);
 
-my $listsize = 5;
-#my $listsize = 256;
+#my $listsize = 5;
+my $listsize = 256;
 my @list;
 foreach (0..$listsize-1){
 	$list[$_] = $_;
@@ -73,3 +73,8 @@ foreach my $len (@lengths){
 	$currentpos = circleAdd $currentpos, $len+$skipsize, $#list;
 	$skipsize++;
 }
+
+
+print "Product of first two elements is ";
+print $list[0] * $list[1];
+print "\n";
