@@ -9,8 +9,7 @@ language to solve it.
 ### What I did
 I decided to do the Advent of Code in Perl, for the simple reason that I don't (didn't) know Perl.
 This is going to be a learning process, for sure. 
-I'm learning mostly from the official perldocs, along with a liberal helping of Google and StackOverflow,
-the old standbys.
+I'm learning mostly from the official perldocs, along with a liberal helping of Google,
 
 ### External links
 * [PerlDocs](http://perldoc.perl.org/perlintro.html)
