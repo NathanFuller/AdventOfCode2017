@@ -55,6 +55,20 @@ print "\nAnother slice is 2 long and starts at 4.";
 print @list[@slice];
 
 
+my @backwards = reverse @list[@slice];
+print "\nHere is the last one backwards\n";
+print @backwards;
+print "\n";
+
+sub circleAdd{
+	#Given three numbers, returns the first two modulo the third.
+	my ($add1, $add2, $listsize) = @_;
+	my $sum = $add1+$add2;
+	$sum -= ($listsize+1) if ($sum > $listsize);
+	return $sum;
+}
+
+print @list[circleAdd(4, 2, $#list)];
 
 
 
