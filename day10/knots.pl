@@ -50,15 +50,26 @@ sub getSlice {
 	return @sliceEls;
 }
 
+sub circleAdd{
+	#Given three numbers, returns the first two modulo the third.
+	my ($add1, $add2, $listsize) = @_;
+	my $sum = $add1+$add2;
+	$sum -= ($listsize+1) if ($sum > $listsize);
+	return $sum;
+}
 
 
 foreach my $len (@lengths){
+	if ($len>$#list+1){
+		print "Error! Bad length $len.\n\n";
+		last;
+	}
 	my @slice = getSlice($len, $currentpos, @list);
 	@list[@slice] = reverse (@list[@slice]);
 	foreach my $thing (@list){
 		print "$thing\t";
 	}
-	print "\n";
-	#move currentpos by $len + $skipsize
+	print "\n\n";
+	$currentpos = circleAdd $currentpos, $len+$skipsize, $#list;
 	$skipsize++;
 }
