@@ -44,11 +44,10 @@ sub getSlice {
 }
 
 sub circleAdd{
-	#Given three numbers, returns the first two modulo the third.
+	#Given three numbers, returns the sum of the first two modulo the third.
 	my ($add1, $add2, $listsize) = @_;
 	my $sum = $add1+$add2;
-	$sum -= ($listsize+1) while ($sum > $listsize); ##POTENTIAL ERROR HERE. DOUBLE CHECK MATH.
-	return $sum;
+	return $sum % $listsize;
 }
 
 my @list;
@@ -56,7 +55,8 @@ foreach (0..255){
 	$list[$_] = $_;
 }
 
-foreach(0..64){
+foreach(1..64){
+	print "$_\n";
 	foreach my $len (@ascii){
 		if ($len>$#list+1){
 			print "Error! Bad length $len.\n\n";
@@ -64,36 +64,29 @@ foreach(0..64){
 		}
 		my @slice = getSlice($len, $currentpos, @list);
 		@list[@slice] = reverse (@list[@slice]);
-		$currentpos = circleAdd $currentpos, $len+$skipsize, $#list;
+		$currentpos = circleAdd ($currentpos, $len+$skipsize, $#list+1);
 		$skipsize++;
 	}
 }
 
-foreach my $thing (@list){
-	print "$thing\t";
-}
+print "@list[0..15]\n";
 print "\n\n";
 
 
 #use numeric bitwise XOR to combine each consecutive block of 16 numbers
 #call this the dense hash
 my $count = 0;
-my @dense;
+my $hex = "";
 while ($count < 16){
 	@els = getSlice(16, $count*16, @list);
-	#Is anything XOR 0 just the original thing?
-	$dense[$count] = 0;
+
+	my $dense = 0;
 	foreach (@list[@els]){
-		$dense[$count] ^= $_;
+		$dense ^= $_;
 	}
+	print "$dense\t";
+	$hex .= sprintf("%02x" , $dense);
 	$count++;
 }
-print "First dense hash is ";
-print "@dense\n";
-
-#output that dense hash in hexadecimal notation
-print "In hexadecimal, that's\n";
-foreach(@dense){
-	print sprintf("%02x" , $_);
-}
 print "\n";
+print "Hex: $hex\n";

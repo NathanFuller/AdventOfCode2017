@@ -74,8 +74,18 @@ print @list[circleAdd(4, 2, $#list)];
 print ord ",";
 
 foreach (0..30){
-	print "0 mod $_ is ";
+	print "0 xor $_ is ";
 	print 0 ^ $_;
 	print "\n";
 }
+
+#65 ^ 27 ^ 9 ^ 1 ^ 4 ^ 3 ^ 40 ^ 50 ^ 91 ^ 7 ^ 6 ^ 0 ^ 2 ^ 5 ^ 68 ^ 22 = 64
+my @nums = (227,84,113,185,86,205,169,152,197,34,102,190,31,16,149,76);
+
+my $dense = 0;
+foreach (@nums){
+	$dense ^= $_;
+}
+print "Condensed is $dense\n";
+
 print "\n";
