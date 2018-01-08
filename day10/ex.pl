@@ -71,5 +71,11 @@ sub circleAdd{
 print @list[circleAdd(4, 2, $#list)];
 
 
+print ord ",";
 
+foreach (0..30){
+	print "0 mod $_ is ";
+	print 0 ^ $_;
+	print "\n";
+}
 print "\n";
